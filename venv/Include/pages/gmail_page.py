@@ -1,25 +1,18 @@
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.support import expected_conditions as ex_cond
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium import webdriver
+import unittest
+#from selenium.webdriver.commeon.keys import Keys
 
 
-class BasePage:
-    _URL = "http://gmail.com"
+class GoogleSearch(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Firefox()
+        self.driver.get('gmail.com')
 
-    def __init__(self, driver: WebDriver) -> None:
-        self._driver = driver
-
-    def navigate_to(self, url):
-        self._driver.get(url)
-
-    def get_element(self, locator: tuple, timeout=5):
-        return WebDriverWait(self._driver, timeout).until(
-            ex_cond.visibility_of_element_located(locator), ' : '.join(locator))
-
-    def get_elements(self, locator: tuple, timeout=5):
-        return WebDriverWait(self._driver, timeout).until(
-            ex_cond.visibility_of_any_elements_located(locator), ' : '.join(locator))
+    def test_01(self):
+        driver = self.driver
+        input_login = driver.find_element_by_id('identifierId')
+        input_login.send_keys('TestingSMUser@gmail.com')
 
 
-class testGmail:
-
+if __name__ == "__main__":
+    unnittest.main()
